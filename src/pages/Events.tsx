@@ -1,7 +1,7 @@
 import { EventCard } from "@/components/EventCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter } from "lucide-react";
+import { Search, SlidersHorizontal, Sparkles } from "lucide-react";
 
 const events = [
   { title: "Tech Community Meetup", date: "Apr 12, 2026", location: "San Francisco, CA", image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop", category: "Tech", spots: 15 },
@@ -19,28 +19,33 @@ export default function Events() {
     <div className="space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Discover Events</h1>
-        <p className="text-muted-foreground mt-1">Find events that match your interests and skills.</p>
+        <p className="text-muted-foreground mt-1 text-[15px]">Find events that match your interests and skills.</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search events..." className="pl-9 bg-card border-border" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input placeholder="Search events..." className="pl-10 bg-card border-border/50 rounded-xl h-11" />
         </div>
-        <Button variant="outline" className="gap-2">
-          <Filter className="h-4 w-4" /> Filters
+        <Button variant="outline" className="gap-2 rounded-xl h-11 border-border/50 hover:bg-primary/5 hover:text-primary hover:border-primary/30">
+          <SlidersHorizontal className="h-4 w-4" /> Filters
         </Button>
       </div>
 
       <div className="flex gap-2 flex-wrap">
         {categories.map((cat) => (
-          <Button key={cat} variant={cat === "All" ? "default" : "secondary"} size="sm" className="rounded-full">
+          <Button
+            key={cat}
+            variant={cat === "All" ? "default" : "secondary"}
+            size="sm"
+            className={`rounded-full text-[13px] font-medium ${cat === "All" ? "gradient-primary border-0 shadow-sm" : "hover:bg-primary/5 hover:text-primary"}`}
+          >
             {cat}
           </Button>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.map((event) => (
           <EventCard key={event.title} {...event} />
         ))}

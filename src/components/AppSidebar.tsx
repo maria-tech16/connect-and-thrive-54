@@ -1,4 +1,4 @@
-import { LayoutDashboard, Calendar, FileText, MessageSquare, User, Settings, Shield } from "lucide-react";
+import { LayoutDashboard, Calendar, FileText, MessageSquare, User, Settings, Shield, Zap } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -32,8 +32,6 @@ const adminItems = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
 
   const renderItems = (items: typeof mainItems) => (
     <SidebarMenu>
@@ -43,11 +41,11 @@ export function AppSidebar() {
             <NavLink
               to={item.url}
               end
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-              activeClassName="bg-primary/10 text-primary font-medium"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sidebar-foreground hover:bg-sidebar-accent transition-all duration-200"
+              activeClassName="gradient-primary-soft text-primary font-semibold shadow-sm"
             >
-              <item.icon className="h-5 w-5 shrink-0" />
-              {!collapsed && <span>{item.title}</span>}
+              <item.icon className="h-[18px] w-[18px] shrink-0" />
+              {!collapsed && <span className="text-[13px]">{item.title}</span>}
             </NavLink>
           </SidebarMenuButton>
         </SidebarMenuItem>
@@ -57,24 +55,31 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
-      <div className="p-4 border-b border-sidebar-border">
+      <div className="p-5 border-b border-sidebar-border">
         {!collapsed ? (
-          <h1 className="text-xl font-bold text-foreground tracking-tight">EventHub</h1>
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center">
+              <Zap className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <h1 className="text-lg font-bold text-foreground tracking-tight">EventHub</h1>
+          </div>
         ) : (
-          <h1 className="text-xl font-bold text-primary text-center">E</h1>
+          <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center mx-auto">
+            <Zap className="h-4 w-4 text-primary-foreground" />
+          </div>
         )}
       </div>
-      <SidebarContent className="px-2 py-4">
+      <SidebarContent className="px-3 py-5">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Main</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2 font-semibold">Main</SidebarGroupLabel>
           <SidebarGroupContent>{renderItems(mainItems)}</SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Account</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2 font-semibold">Account</SidebarGroupLabel>
           <SidebarGroupContent>{renderItems(accountItems)}</SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Manage</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2 font-semibold">Manage</SidebarGroupLabel>
           <SidebarGroupContent>{renderItems(adminItems)}</SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
