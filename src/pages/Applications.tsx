@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Clock, CheckCircle2, XCircle } from "lucide-react";
+import { Clock, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 
 const applications = [
   { event: "Tech Community Meetup", role: "Volunteer", date: "Apr 3, 2026", status: "pending" },
@@ -11,9 +11,9 @@ const applications = [
 ];
 
 const statusConfig = {
-  approved: { icon: CheckCircle2, class: "bg-success/10 text-success border-0", iconClass: "text-success" },
-  pending: { icon: Clock, class: "bg-warning/10 text-warning border-0", iconClass: "text-warning" },
-  rejected: { icon: XCircle, class: "bg-destructive/10 text-destructive border-0", iconClass: "text-destructive" },
+  approved: { icon: CheckCircle2, class: "bg-success/10 text-success border-0 font-medium", iconClass: "text-success" },
+  pending: { icon: Clock, class: "bg-warning/10 text-warning border-0 font-medium", iconClass: "text-warning" },
+  rejected: { icon: XCircle, class: "bg-destructive/10 text-destructive border-0 font-medium", iconClass: "text-destructive" },
 };
 
 export default function Applications() {
@@ -21,24 +21,29 @@ export default function Applications() {
     <div className="space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold text-foreground">My Applications</h1>
-        <p className="text-muted-foreground mt-1">Track your event applications and their status.</p>
+        <p className="text-muted-foreground mt-1 text-[15px]">Track your event applications and their status.</p>
       </div>
 
-      <div className="bg-card rounded-xl card-shadow overflow-hidden">
+      <div className="bg-card rounded-2xl card-shadow overflow-hidden border border-border/50">
         <div className="divide-y divide-border">
           {applications.map((app, i) => {
             const config = statusConfig[app.status as keyof typeof statusConfig];
             const Icon = config.icon;
             return (
-              <div key={i} className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Icon className={`h-5 w-5 ${config.iconClass}`} />
+              <div key={i} className="flex items-center justify-between p-4 md:p-5 hover:bg-muted/30 transition-colors cursor-pointer group">
+                <div className="flex items-center gap-3.5">
+                  <div className="h-9 w-9 rounded-xl gradient-primary-soft flex items-center justify-center">
+                    <Icon className={`h-4 w-4 ${config.iconClass}`} />
+                  </div>
                   <div>
-                    <p className="font-medium text-card-foreground text-sm">{app.event}</p>
-                    <p className="text-xs text-muted-foreground">{app.role} · Applied {app.date}</p>
+                    <p className="font-medium text-card-foreground text-sm group-hover:text-primary transition-colors">{app.event}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{app.role} · Applied {app.date}</p>
                   </div>
                 </div>
-                <Badge className={config.class}>{app.status}</Badge>
+                <div className="flex items-center gap-3">
+                  <Badge className={config.class}>{app.status}</Badge>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
               </div>
             );
           })}

@@ -1,8 +1,9 @@
-import { Calendar, Users, CheckCircle2, Clock, Plus, TrendingUp } from "lucide-react";
+import { Calendar, Users, CheckCircle2, Clock, Plus, Eye } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const pendingApplications = [
   { name: "Sarah Chen", event: "Tech Community Meetup", role: "Volunteer", date: "Apr 3", avatar: "SC" },
@@ -23,9 +24,9 @@ export default function Admin() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Organizer Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Manage your events and applications.</p>
+          <p className="text-muted-foreground mt-1 text-[15px]">Manage your events and applications.</p>
         </div>
-        <Button className="gap-2">
+        <Button className="gap-2 gradient-primary border-0 rounded-xl shadow-sm font-semibold">
           <Plus className="h-4 w-4" /> Create Event
         </Button>
       </div>
@@ -38,44 +39,46 @@ export default function Admin() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-6 card-shadow">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Pending Applications</h2>
+        <Card className="p-6 card-shadow rounded-2xl border-border/50">
+          <h2 className="text-lg font-bold text-foreground mb-4">Pending Applications</h2>
           <div className="space-y-3">
             {pendingApplications.map((app) => (
-              <div key={app.name + app.event} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+              <div key={app.name + app.event} className="flex items-center justify-between p-3.5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium text-primary">
-                    {app.avatar}
-                  </div>
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback className="gradient-primary-soft text-primary text-xs font-semibold">
+                      {app.avatar}
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <p className="font-medium text-card-foreground text-sm">{app.name}</p>
                     <p className="text-xs text-muted-foreground">{app.event} · {app.role}</p>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="default" className="h-7 text-xs">Approve</Button>
-                  <Button size="sm" variant="outline" className="h-7 text-xs">Decline</Button>
+                  <Button size="sm" className="h-8 text-xs rounded-lg gradient-primary border-0 font-semibold">Approve</Button>
+                  <Button size="sm" variant="outline" className="h-8 text-xs rounded-lg border-border/50">Decline</Button>
                 </div>
               </div>
             ))}
           </div>
         </Card>
 
-        <Card className="p-6 card-shadow">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Your Events</h2>
+        <Card className="p-6 card-shadow rounded-2xl border-border/50">
+          <h2 className="text-lg font-bold text-foreground mb-4">Your Events</h2>
           <div className="space-y-3">
             {recentEvents.map((event) => (
-              <div key={event.title} className="p-3 rounded-lg bg-muted/50 space-y-2">
+              <div key={event.title} className="p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors space-y-3">
                 <div className="flex items-center justify-between">
-                  <p className="font-medium text-card-foreground text-sm">{event.title}</p>
-                  <Badge variant="secondary" className="text-xs">{event.date}</Badge>
+                  <p className="font-semibold text-card-foreground text-sm">{event.title}</p>
+                  <Badge variant="secondary" className="text-xs font-medium rounded-full">{event.date}</Badge>
                 </div>
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                  <span>{event.applicants} applicants</span>
-                  <span>{event.approved} approved</span>
-                  <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                  <span className="font-medium">{event.applicants} applicants</span>
+                  <span className="font-medium text-success">{event.approved} approved</span>
+                  <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-primary rounded-full"
+                      className="h-full gradient-primary rounded-full transition-all duration-500"
                       style={{ width: `${(event.approved / event.applicants) * 100}%` }}
                     />
                   </div>
